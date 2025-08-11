@@ -5,17 +5,17 @@ void main() {
   runApp(const MyApp());
 }
 
-final userRoute = AppRoute<Null, Null>(
+final userRoute = SafeRoute<Null, Null>(
   name: '/',
   builder: (context, userId) => MyHomePage(),
 );
 
-final settingsRoute = AppRoute<bool, bool>(
+final settingsRoute = SafeRoute<bool, bool>(
   name: '/home',
   builder: (context, value) => SettingsPage(),
 );
 
-final safeRouter = SafeRoute()..registerAll([userRoute, settingsRoute]);
+final safeRouter = SafeRouter()..registerAll([userRoute, settingsRoute]);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
 
-class RouteRegistry {
-  final _routes = <String, AppRoute<dynamic, dynamic>>{};
+typedef UntypedSafeRoute = SafeRoute<Object?, Object?>;
 
-  AppRoute<TArgs, TResult> register<TArgs, TResult>(
-    AppRoute<TArgs, TResult> route,
+class RouteRegistry {
+  final _routes = <String, UntypedSafeRoute>{};
+
+  SafeRoute<TArgs, TResult> register<TArgs, TResult>(
+    SafeRoute<TArgs, TResult> route,
   ) {
     _routes[route.name] = route;
     return route;
   }
 
-  AppRoute<dynamic, dynamic>? find(String name) => _routes[name];
+  UntypedSafeRoute? find(String name) => _routes[name];
 }
 
-class AppRoute<TArgs, TResult> {
+class SafeRoute<TArgs, TResult> {
   final String name;
   final Widget Function(BuildContext, TArgs) builder;
 
-  const AppRoute({required this.name, required this.builder});
+  const SafeRoute({required this.name, required this.builder});
 
   Route<TResult> materialPageRoute(TArgs args) {
     return MaterialPageRoute<TResult>(
@@ -27,12 +29,12 @@ class AppRoute<TArgs, TResult> {
   }
 }
 
-class SafeRoute {
+class SafeRouter {
   final RouteRegistry _registry;
 
-  SafeRoute() : _registry = RouteRegistry();
+  SafeRouter() : _registry = RouteRegistry();
 
-  void registerAll(List<AppRoute<dynamic, dynamic>> routes) {
+  void registerAll(List<UntypedSafeRoute> routes) {
     for (var route in routes) {
       _registry.register(route);
     }
@@ -48,8 +50,68 @@ extension AppRouteNavigation on NavigatorState {
   Future<TResult?> pushRoute<
     TArgs,
     TResult,
-    Route extends AppRoute<TArgs, TResult>
+    Route extends SafeRoute<TArgs, TResult>
   >(Route route, TArgs args) {
     return push<TResult>(route.materialPageRoute(args));
+  }
+
+  Future<T?> popAndPushRoute<T extends Object?, TO extends Object?>(
+    String routeName, {
+    TO? result,
+    Object? arguments,
+  }) {
+    // TODO: implement popAndPushNamed
+    throw UnimplementedError();
+  }
+
+  Future<T?> pushRouteAndRemoveUntil<T extends Object?>(
+    Route<T> newRoute,
+    RoutePredicate predicate,
+  ) {
+    // TODO: implement pushAndRemoveUntil
+    throw UnimplementedError();
+  }
+
+  Future<T?> pushReplacementRoute<T extends Object?, TO extends Object?>(
+    Route<T> newRoute, {
+    TO? result,
+  }) {
+    // TODO: implement pushReplacement
+    throw UnimplementedError();
+  }
+
+  String restorablePopAndPushNamed<T extends Object?, TO extends Object?>(
+    String routeName, {
+    TO? result,
+    Object? arguments,
+  }) {
+    // TODO: implement restorablePopAndPushNamed
+    throw UnimplementedError();
+  }
+
+  String restorablePushNamed<T extends Object?>(
+    String routeName, {
+    Object? arguments,
+  }) {
+    // TODO: implement restorablePushNamed
+    throw UnimplementedError();
+  }
+
+  String restorablePushNamedAndRemoveUntil<T extends Object?>(
+    String newRouteName,
+    RoutePredicate predicate, {
+    Object? arguments,
+  }) {
+    // TODO: implement restorablePushNamedAndRemoveUntil
+    throw UnimplementedError();
+  }
+
+  String restorablePushReplacementNamed<T extends Object?, TO extends Object?>(
+    String routeName, {
+    TO? result,
+    Object? arguments,
+  }) {
+    // TODO: implement restorablePushReplacementNamed
+    throw UnimplementedError();
   }
 }
