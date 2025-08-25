@@ -2,27 +2,61 @@ import 'package:flutter/material.dart';
 import 'package:safe_route/safe_route.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-final userRoute = SafeRoute<Null, Null>(
+final firstRoute = SafeRoute<Null, Null>(
   name: '/',
-  builder: (context, userId) => MyHomePage(),
+  builder: (_, _) => FirstPage(),
+);
+
+final userRoute = SafeRoute<Null, Null>(
+  name: '/user',
+  builder: (_, _) => MyHomePage(),
 );
 
 final settingsRoute = SafeRoute<bool, bool>(
-  name: '/home',
-  builder: (context, value) => SettingsPage(),
+  name: '/settings',
+  builder: (_, _) => SettingsPage(),
 );
 
-final safeRouter = SafeRouter()..registerAll([userRoute, settingsRoute]);
+final nestedRoute = SafeNestedRoute(
+  name: '/nested',
+  routes: [userRoute, settingsRoute],
+);
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key})
+    : router = SafeRouter()..registerAll([nestedRoute, userRoute, firstRoute]);
+
+  final SafeRouter router;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(onGenerateRoute: safeRouter.onGenerateRoute);
+    return MaterialApp(
+      initialRoute: userRoute.fullPath,
+      onGenerateRoute: router.onGenerateRoute,
+    );
+  }
+}
+
+class FirstPage extends StatelessWidget {
+  const FirstPage({super.key});
+
+  VoidCallback _toSettings(BuildContext context) => () {
+    Navigator.of(context).pushRoute(settingsRoute, true);
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: Center(child: Text('First')),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _toSettings(context),
+        child: Icon(Icons.arrow_forward_ios_rounded),
+      ),
+    );
   }
 }
 
