@@ -140,7 +140,7 @@ packages:
     source: hosted
     version: "1.9.1"
   safe_route:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       path: ".."
       relative: true

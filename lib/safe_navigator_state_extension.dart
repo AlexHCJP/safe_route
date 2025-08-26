@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:safe_route/safe_route.dart';
 
 extension AppRouteNavigation on NavigatorState {
-
-  
   Future<TResult?> pushRoute<
     TArgs,
     TResult,
@@ -12,67 +10,71 @@ extension AppRouteNavigation on NavigatorState {
     return pushNamed<TResult>(route.fullPath, arguments: args);
   }
 
-  Future<T?> popAndPushRoute<T extends Object?, TO extends Object?, A>(
-    SafeRoute<A, T> route, {
-    TO? result,
-    A? arguments,
-  }) {
-    return popAndPushNamed<T, TO>(
+  Future<TResult?> popAndPushRoute<
+    TArgs,
+    TResult,
+    TPopResult,
+    Route extends SafeRoute<TArgs, TResult>
+  >(SafeRoute<TArgs, TResult> route, {TPopResult? result, TArgs? arguments}) {
+    return popAndPushNamed<TResult, TPopResult>(
       route.fullPath,
       result: result,
       arguments: arguments,
     );
   }
 
-  Future<T?> pushRouteAndRemoveUntil<T extends Object?, A>(
-    SafeRoute<A, T> route,
-    RoutePredicate predicate, {
-    A? arguments,
-  }) {
-    return pushNamedAndRemoveUntil<T>(
+  Future<TResult?> pushRouteAndRemoveUntil<
+    TArgs,
+    TResult,
+    Route extends SafeRoute<TArgs, TResult>
+  >(Route route, RoutePredicate predicate, {TArgs? arguments}) {
+    return pushNamedAndRemoveUntil<TResult>(
       route.fullPath,
       predicate,
       arguments: arguments,
     );
   }
 
-  Future<T?> pushReplacementRoute<T extends Object?, TO extends Object?, A>(
-    SafeRoute<A, T> route, {
-    TO? result,
-    A? arguments,
-  }) {
-    return pushReplacementNamed<T, TO>(
+  Future<TResult?> pushReplacementRoute<
+    TArgs,
+    TResult,
+    TPopResult,
+    Route extends SafeRoute<TArgs, TResult>
+  >(Route route, {TPopResult? result, TArgs? arguments}) {
+    return pushReplacementNamed<TResult, TPopResult>(
       route.fullPath,
       result: result,
       arguments: arguments,
     );
   }
 
-  String restorablePopAndPushRoute<T extends Object?, TO extends Object?, A>(
-    SafeRoute<A, T> route, {
-    TO? result,
-    A? arguments,
-  }) {
-    return restorablePopAndPushNamed<T, TO>(
+  String restorablePopAndPushRoute<
+    TArgs,
+    TResult,
+    TPopResult,
+    Route extends SafeRoute<TArgs, TResult>
+  >(Route route, {TPopResult? result, TArgs? arguments}) {
+    return restorablePopAndPushNamed<TResult, TPopResult>(
       route.fullPath,
       result: result,
       arguments: arguments,
     );
   }
 
-  String restorablePushRoute<T extends Object?, A>(
-    SafeRoute<A, T> route, {
-    A? arguments,
-  }) {
-    return restorablePushNamed<T>(route.fullPath, arguments: arguments);
+  String restorablePushRoute<
+    TArgs,
+    TResult,
+    Route extends SafeRoute<TArgs, TResult>
+  >(Route route, {TArgs? arguments}) {
+    return restorablePushNamed<TResult>(route.fullPath, arguments: arguments);
   }
 
-  String restorablePushRouteAndRemoveUntil<T extends Object?, A>(
-    SafeRoute<A, T> route,
-    RoutePredicate predicate, {
-    A? arguments,
-  }) {
-    return restorablePushNamedAndRemoveUntil<T>(
+  String restorablePushRouteAndRemoveUntil<
+    TArgs,
+    TResult,
+    Route extends SafeRoute<TArgs, TResult>
+  >(Route route, RoutePredicate predicate, {TArgs? arguments}) {
+    return restorablePushNamedAndRemoveUntil<TResult>(
       route.fullPath,
       predicate,
       arguments: arguments,
@@ -81,11 +83,12 @@ extension AppRouteNavigation on NavigatorState {
 
   /// Restorable: pushReplacement
   String restorablePushReplacementRoute<
-    T extends Object?,
-    TO extends Object?,
-    A
-  >(SafeRoute<A, T> route, {TO? result, A? arguments}) {
-    return restorablePushReplacementNamed<T, TO>(
+    TArgs,
+    TResult,
+    TPopResult,
+    Route extends SafeRoute<TArgs, TResult>
+  >(Route route, {TPopResult? result, TArgs? arguments}) {
+    return restorablePushReplacementNamed<TResult, TPopResult>(
       route.fullPath,
       result: result,
       arguments: arguments,
