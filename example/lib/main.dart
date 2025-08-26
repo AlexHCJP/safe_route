@@ -27,16 +27,15 @@ final shopRoute = SafeRoute<Null, String>(
 );
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key}) : router = SafeRouter()
-    ..registerAll([loginRoute, homeRoute, settingsRoute, shopRoute]);
+  MyApp({super.key})
+    : router = SafeRouter()
+        ..registerAll([loginRoute, homeRoute, settingsRoute, shopRoute]);
 
   final SafeRouter router;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      onGenerateRoute: router.onGenerateRoute,
-    );
+    return MaterialApp(onGenerateRoute: router.onGenerateRoute);
   }
 }
 
@@ -137,7 +136,8 @@ class _HomePageState extends State<HomePage> {
                 title: Text(
                   cart[i],
                   style: TextStyle(
-                      color: darkMode ? Colors.white : Colors.black),
+                    color: darkMode ? Colors.white : Colors.black,
+                  ),
                 ),
               ),
             ),
@@ -212,10 +212,12 @@ class ShopPage extends StatelessWidget {
       appBar: AppBar(title: const Text("Shop")),
       body: ListView(
         children: items
-            .map((e) => ListTile(
-                  title: Text(e),
-                  onTap: () => _selectItem(context, e),
-                ))
+            .map(
+              (e) => ListTile(
+                title: Text(e),
+                onTap: () => _selectItem(context, e),
+              ),
+            )
             .toList(),
       ),
     );
