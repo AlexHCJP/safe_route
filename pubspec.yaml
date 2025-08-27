@@ -1,6 +1,6 @@
 name: safe_route
 description: A type-safe Flutter navigation package that adds compile-time checks for route arguments and results.
-version: 0.0.2
+version: 0.0.3
 
 homepage: https://pub.dev/packages/safe_route
 repository: https://github.com/AlexHCJP/safe_route

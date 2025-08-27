@@ -51,7 +51,9 @@ class SafeRouteRegistry {
     int index,
   ) {
     // Special case: root route `/`
-    if (namedRoutes.isEmpty) return routes['/'] as SafeRoute;
+    if (namedRoutes.isEmpty) {
+      if (routes['/'] case SafeRoute<Object?, Object?> route) return route;
+    }
 
     if (index >= namedRoutes.length) return null;
 
