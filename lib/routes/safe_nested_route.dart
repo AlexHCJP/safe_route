@@ -35,7 +35,7 @@ class SafeNestedRoute extends RouteNode {
   /// - [name] is the base path for this group (e.g. `"/account"`).
   /// - [routes] are child routes inside this namespace.
   SafeNestedRoute({required super.name, required List<RouteNode> routes})
-    : routes = {for (final route in routes) route.name: route} {
+      : routes = {for (final route in routes) route.name: route} {
     for (final route in routes) {
       // Attach parent reference to each child
       route.wrap(this);
