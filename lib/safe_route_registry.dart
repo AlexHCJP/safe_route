@@ -53,6 +53,8 @@ class SafeRouteRegistry {
     // Special case: root route `/`
     if (namedRoutes.isEmpty) {
       if (routes['/'] case SafeRoute<Object?, Object?> route) return route;
+      if (routes['/'] case SafeNestedRoute route)
+        return _nestedFind(route.routes, ['/'], index + 1);
     }
 
     if (index >= namedRoutes.length) return null;
