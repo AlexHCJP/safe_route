@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:safe_route/route_node.dart';
+import 'package:safe_route/routes/route_node.dart';
 import 'package:safe_route/safe_route_registry.dart';
 
 /// A type-safe router for Flutter applications.
@@ -29,9 +29,13 @@ class SafeRouter {
   /// ```dart
   /// router.registerAll([homeRoute, settingsRoute]);
   /// ```
-  void registerAll(List<RouteNode> routes) {
-    _registry.registerAll(routes);
-  }
+  void registerAll(List<RouteNode> routes) => _registry.registerAll(routes);
+
+  /// Set default path
+  set defaultPath(String path) => _registry.defaultPath = path;
+
+  /// Get default path
+  String get defaultPath => _registry.defaultPath;
 
   /// A callback for [MaterialApp.onGenerateRoute].
   ///

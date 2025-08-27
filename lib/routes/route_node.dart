@@ -1,3 +1,6 @@
+import 'package:flutter/foundation.dart';
+import 'package:path/path.dart' as p;
+
 /// Base class for all nodes in the safe routing tree.
 ///
 /// A [RouteNode] represents a single element in the route hierarchy.
@@ -40,9 +43,14 @@ abstract class RouteNode {
   /// Attaches this node to a [parent].
   ///
   /// Called internally by [SafeNestedRoute] when registering child routes.
-  void wrap(RouteNode parent) {
+  @protected
+  set parent(RouteNode? parent) {
+    if (_parent != null) throw Exception();
     _parent = parent;
   }
+
+  /// Get parent route
+  RouteNode? get parent => _parent;
 
   /// The full path of this route, including all parent paths.
   ///
@@ -52,5 +60,5 @@ abstract class RouteNode {
   ///   + "/profile" (SafeRoute)
   /// = "/account/profile"
   /// ```
-  String get fullPath => (_parent?.fullPath ?? '') + name;
+  String get fullPath => p.joinAll([_parent?.fullPath ?? '/', name]);
 }

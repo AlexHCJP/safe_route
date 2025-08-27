@@ -62,10 +62,11 @@ final settingsRoute = SafeRoute<Null, bool>(
 
 ```dart
 final router = SafeRouter()
-  ..registerAll([homeRoute, settingsRoute]);
+  ..registerAll([homeRoute, settingsRoute])
+  ..defaultPath = homeRoute.fullPath;
 
 MaterialApp(
-  initialRoute: homeRoute.fullPath,
+  initialRoute: router.defaultPath,
   onGenerateRoute: router.onGenerateRoute,
 );
 ```

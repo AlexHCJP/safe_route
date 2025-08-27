@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:safe_route/route_node.dart';
+import 'package:safe_route/routes/route_node.dart';
 
 /// A strongly-typed route that holds information about a page
 /// and its argument/result types.

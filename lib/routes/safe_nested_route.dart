@@ -1,4 +1,4 @@
-import 'package:safe_route/route_node.dart';
+import 'package:safe_route/routes/route_node.dart';
 
 /// A container for grouping multiple routes under a common path.
 ///
@@ -34,16 +34,20 @@ class SafeNestedRoute extends RouteNode {
   ///
   /// - [name] is the base path for this group (e.g. `"/account"`).
   /// - [routes] are child routes inside this namespace.
-  SafeNestedRoute({required super.name, required List<RouteNode> routes})
-      : routes = {for (final route in routes) route.name: route} {
+  SafeNestedRoute({
+    required super.name,
+    required List<RouteNode> routes,
+  }) : _routes = {} {
     for (final route in routes) {
-      // Attach parent reference to each child
-      route.wrap(this);
+      route.parent = this;
+      _routes[route.name] = route;
     }
   }
+
+  final Map<String, RouteNode> _routes;
 
   /// All child routes registered inside this nested route.
   ///
   /// Keys are route names (relative to this nested group).
-  final Map<String, RouteNode> routes;
+  Map<String, RouteNode> get routes => Map.unmodifiable(_routes);
 }
